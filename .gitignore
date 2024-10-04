@@ -1,0 +1,11 @@
+.cache/
+.dotnet/
+.gnupg/
+.local/
+.vscode-server/
+.ssh/known_hosts
+.vscode/settings.json
+dataset/
+.bash_history
+*.pyc
+.viminfo
