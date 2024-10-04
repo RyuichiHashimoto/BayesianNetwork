@@ -1,0 +1,37 @@
+@startuml
+
+actor user
+participant "Dataset" as dataset
+participant "Model" as model
+participant "Postprocessor" as postprocess
+participant "Metric" as metric
+
+alt "if cache exists"
+    user -> dataset: load dataset from cache file
+    dataset --> user
+else "if cache does not exist"
+    user -> dataset: load dataset from DB/file
+    dataset --> user
+    user -> dataset: preprocesse dataset
+    dataset --> user
+    user -> dataset: create cachedfile for dataset
+    dataset -> user: 
+end
+
+user -> model: train(train_dataset)
+model -> user: 
+
+user -> model: predict(train_dataset)
+model --> user: 
+
+user -> postprocess: postprocess predicted data
+postprocess --> user: 
+
+user -> metric: evaluate predicted data
+metric --> user: 
+
+user -> resultWriter: write results to DB/file
+resultWriter -> user:
+
+
+@enduml

@@ -1,0 +1,36 @@
+@startuml
+
+package ModelPackage {
+    class ModelParameter {
+
+    }
+    class Model {
+        +String model
+        +void predict()
+        +void fit()
+        +void learn()
+    }
+}
+
+class Metric {
+    +void evaluate()
+}
+
+class resultwriter {
+    +void write(Metric)
+}
+
+class Dataset {
+    -data: DataFrame
+    +void preprocess()
+    +void loadDataset()
+    +void displayInfo()
+}
+
+
+Dataset -- Model : learn
+Model *-- ModelParameter : has
+Metric -- Dataset : evaluate
+resultwriter -- Metric : write
+
+@enduml
