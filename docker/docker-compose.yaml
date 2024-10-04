@@ -15,7 +15,7 @@ services:
     user: 1000:1000
 
     restart: always
-    container_name: kaggle
+    container_name: basesian
     runtime: nvidia
 
     ports:
