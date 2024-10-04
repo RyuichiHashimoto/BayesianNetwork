@@ -5,7 +5,7 @@
 .vscode-server/
 .ssh/known_hosts
 .vscode/settings.json
-dataset/
+./dataset/
 .bash_history
 *.pyc
 .viminfo
