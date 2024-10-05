@@ -1,15 +1,22 @@
 from abc import ABC, abstractmethod
+from attack_predictor_libs.dataset.dataset import Dataset
 
 class Metric(ABC):
     
-    @abstractmethod
-    def evaluate(self, dataset):
-        pass    
+    def __init__(self):
+        self._value = None
+
+    @property
+    def value(self) -> any:
+        return self._value
+    
+    @property
+    def is_already_evaluated(self) -> bool:
+        return self._value is not None
     
     @abstractmethod
-    def to_dict(self):
-        return {
-            "name": self.name,
-            "metric_type": self.metric_type,
-            "metric_value": self.metric_value
-        }
+    def evaluate(self, Dataset: Dataset, savedir: str | None = None) -> None:
+        raise NotImplementedError
+    
+    
+    
