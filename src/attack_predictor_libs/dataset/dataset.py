@@ -24,9 +24,9 @@ class Dataset(ABC):
     
     def _load(self, filepath: str, create_cache: bool = True) -> pl.DataFrame:
         if self._has_cache(filepath):
-            return self._load_cache(filepath)
+            logger.info(f"load cache file from: {filepath}")
+            self._data = self._load_cache(filepath)
         else:
-            logger.info(f"Cache file not found: {filepath}")
             self._data = self._load_file(filepath)
             if create_cache:
                 self._save_cache(self._data, filepath)
