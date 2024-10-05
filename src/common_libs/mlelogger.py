@@ -26,8 +26,8 @@ def init_logging(log_file: str = "") -> None:
     # ファイルハンドラ
     if log_file != "":
         fh = logging.FileHandler(log_file)
-        fh.setLevel(logging.INFO)
+        fh.setLevel(logging.DEBUG)
         fh.setFormatter(logging.Formatter(LOGFORMAT))
         logger.addHandler(fh)
 
-    logging.captureWarnings(True) # Warningをロギングする
+    # logging.captureWarnings(True) # Warningをロギングする
