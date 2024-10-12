@@ -22,6 +22,9 @@ class WineDataset(Dataset):
         df_scaled = scaler.fit_transform(df)
         df =pd.DataFrame(df_scaled,columns=df.columns)
 
+        for col in wine.feature_names:
+            df[col] = pd.cut(df[col], 5, labels=False)
+        
         return pl.from_pandas(df)
     
 

@@ -4,7 +4,7 @@ from abc import ABC, abstractmethod
 from common_libs.fileio import load_pickle, save_as_pickle
 from attack_predictor_libs._exception import AttackLibException
 import logging
-
+import pandas as pd
 logger = logging.getLogger(__name__)
 
 CACHE_POSTFIX = ".cache.pkl"
@@ -12,15 +12,31 @@ CACHE_POSTFIX = ".cache.pkl"
 class Dataset(ABC):
     def __init__(self, filepath: str):
         self.filepath = filepath
+        self._data = None
+        self._data_as_pandas = None
+        
         self._load(filepath)
         
     
     @property
-    def data(self):
+    def data(self) -> pl.DataFrame:
+        if self._data is None:
+            raise AttackLibException("Dataset is not loaded yet")
+    
+        return self._data
+    
+    @property
+    def data_as_pandas(self) -> pd.DataFrame:
         if self._data is None:
             raise AttackLibException("Dataset is not loaded yet")
         
-        return self._data
+        if self._data_as_pandas is not None:
+            return self._data_as_pandas
+        
+        self._data_as_pandas = self._data.to_pandas()
+        return self._data_as_pandas
+
+
     
     def _load(self, filepath: str, create_cache: bool = True) -> pl.DataFrame:
         if self._has_cache(filepath):
@@ -29,12 +45,13 @@ class Dataset(ABC):
         else:
             self._data = self._load_file(filepath)
             if create_cache:
+                logger.info(f"save cache file to: {filepath}")
                 self._save_cache(self._data, filepath)
-
+        
     
-    @abstractmethod
-    def __getitem__(self, index: str):
-        raise NotImplementedError
+    # @abstractmethod
+    # def __getitem__(self, index: str):
+    #     raise NotImplementedError
         
     @abstractmethod
     def _load_file(self, filepath: str) -> pl.DataFrame:
@@ -50,5 +67,10 @@ class Dataset(ABC):
         return load_pickle(self._craete_cachepath(filepath))
         
     def _save_cache(self, data: any, filepath: str):
-        return save_as_pickle(data, self._craete_cachepath(filepath))
+        save_as_pickle(data, self._craete_cachepath(filepath))
+        if isinstance(self._data, pl.DataFrame):
+            self._data.write_csv(filepath + ".csv")
+
+
+        
     
