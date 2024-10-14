@@ -35,4 +35,3 @@ RUN apt install curl -y && \
 
 # 必要に応じて以下の行を有効化
 RUN apt install build-essential graphviz graphviz-dev  -y
-# USER $USERNAME

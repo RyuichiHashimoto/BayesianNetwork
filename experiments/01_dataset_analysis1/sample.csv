@@ -1,0 +1,9 @@
+Timestamp,MitreTechniques,is_preparation_alert,is_intrusion_alert,is_compromise_alert,phase
+2024-06-05T16:13:20.000000,T1078;T1078.004,true,true,false,2
+2024-06-05T16:13:20.000000,T1078;T1078.004,true,true,false,2
+2024-06-05T16:13:20.000000,T1078;T1078.004,true,true,false,2
+2024-06-05T16:13:20.000000,T1078;T1078.004,true,true,false,2
+2024-06-05T16:13:20.000000,T1078;T1078.004,true,true,false,2
+2024-06-05T23:55:58.000000,T1537,false,false,true,4
+2024-06-05T23:55:58.000000,T1537,false,false,true,4
+2024-06-05T23:55:58.000000,T1537,false,false,true,4
