@@ -13,20 +13,19 @@ class GuideDataset(Dataset):
     def __init__(self, filepath: str = "/home/work/dataset/guide/guide.csv"):
         return super().__init__(filepath)
     
-    def __getitem__(self, key: tuple[str, int]) -> pl.DataFrame:
-        mode, idx = key
+    def __getitem__(self, key: tuple[str, int, int]) -> pl.DataFrame:
+        mode, org_id, incident_idx = key
         if mode not in ["train", "test"]:
             raise KeyError(f"mode must be 'train' or 'test', but got {mode}")
         
-        condition = (pl.col("dataset_type") == mode) & (pl.col("IncidentId") == idx)
+        condition = (pl.col("dataset_type") == mode) & (pl.col("IncidentId") == incident_idx) & (pl.col("OrgId") == org_id)
         ret_df = self._data.filter(condition)
 
         if ret_df.shape[0] == 0:
-            raise KeyError(f"mode = {mode} and idx = {idx} is not found")
+            raise KeyError(f"mode = {mode}, org_id = {org_id}, incident_idx = {incident_idx} is not found")
         
         return ret_df.sort("Timestamp")
         
-        # raise NotImplementedError
         
     def _load_file(self, filepath: str) -> pl.DataFrame:
         train_path =  "/home/work/dataset/guide/GUIDE_Train.csv"
